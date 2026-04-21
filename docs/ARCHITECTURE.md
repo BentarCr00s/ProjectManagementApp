@@ -4,7 +4,7 @@
 
 ## 1. Project Overview
 
-ClickUp Replica is an MVP project management tool built with:
+TaskSync is an MVP project management tool built with:
 
 - **Express.js** — HTTP server and routing
 - **Pug** — Server-side HTML templating

@@ -3,7 +3,7 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title #{title} | ClickUp Replica
+    title #{title} | TaskSync
     link(rel="stylesheet", href="/css/styles.css")
     //- AlpineJS for simple interactions (dropdowns, modals)
     script(defer, src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js")
@@ -18,7 +18,7 @@ html(lang="en")
         .p-4.border-b.border-sidebar-border.flex.justify-between.items-center
           .font-bold.text-lg.text-white.flex.items-center.gap-2
             span.text-brand-500.text-xl ⬡
-            | ClickUp Clone
+            | TaskSync
 
         .flex-1.overflow-y-auto.scrollbar-thin.p-3
           if currentWorkspace
@@ -164,7 +164,7 @@ html(lang="en")
           span.hidden.sm_inline-block.sm_align-middle.sm_h-screen(aria-hidden="true") &#8203;
 
           .inline-block.align-bottom.bg-white.rounded-xl.text-left.overflow-hidden.shadow-modal.transform.transition-all.sm_my-8.sm_align-middle.sm_max-w-lg.sm_w-full(x-show="open" x-transition)
-            form(@submit.prevent="createTask")
+            form(@submit.prevent="createTask(title, description, priority)")
               .bg-white.px-4.pt-5.pb-4.sm_p-6.sm_pb-4
                 h3#modal-title.text-lg.leading-6.font-medium.text-gray-900.mb-4 Create New Task
 
@@ -195,12 +195,11 @@ html(lang="en")
           }));
         });
 
-        async function createTask(e) {
-          const form = e.target;
+        async function createTask(title, description, priority) {
           const data = {
-            title: form.__x.$data.title,
-            description: form.__x.$data.description,
-            priority: form.__x.$data.priority,
+            title: title,
+            description: description,
+            priority: priority,
             listId: '#{currentList ? currentList.id : ""}'
           };
 

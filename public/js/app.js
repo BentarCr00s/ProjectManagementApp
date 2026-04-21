@@ -1,4 +1,4 @@
-// Global utility functions for ClickUp Replica
+// Global utility functions for TaskSync
 
 // ─── Toast Notifications ────────────────────────────────────────────────────
 

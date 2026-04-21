@@ -12,16 +12,28 @@
 # Error details
 
 ```
-Error: expect(locator).toBeVisible() failed
+Test timeout of 30000ms exceeded.
+```
 
-Locator: getByText('Create your first List')
-Expected: visible
-Timeout: 5000ms
-Error: element(s) not found
-
+```
+Error: page.fill: Test timeout of 30000ms exceeded.
 Call log:
-  - Expect "toBeVisible" with timeout 5000ms
-  - waiting for getByText('Create your first List')
+  - waiting for locator('input[name="name"]')
+    - locator resolved to <input type="text" name="name" required="" autofocus="" class="form-input" placeholder="e.g. Acme Corp"/>
+    - fill("My E2E Workspace")
+  - attempting fill action
+    2 × waiting for element to be visible, enabled and editable
+      - element is not visible
+    - retrying fill action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and editable
+      - element is not visible
+    - retrying fill action
+      - waiting 100ms
+    58 × waiting for element to be visible, enabled and editable
+       - element is not visible
+     - retrying fill action
+       - waiting 500ms
 
 ```
 
@@ -32,7 +44,7 @@ Call log:
   - complementary [ref=e3]:
     - generic [ref=e5]:
       - generic [ref=e6]: ⬡
-      - text: ClickUp Clone
+      - text: TaskSync
     - generic [ref=e7]:
       - generic [ref=e8]: Workspaces
       - generic [ref=e9]: No workspaces
@@ -44,7 +56,7 @@ Call log:
           - /url: /logout
   - main [ref=e16]:
     - generic [ref=e17]:
-      - heading "404 - Not Found" [level=1] [ref=e19]
+      - heading "Dashboard" [level=1] [ref=e19]
       - button [ref=e21] [cursor=pointer]:
         - img [ref=e22]
     - generic [ref=e25]:
@@ -63,7 +75,7 @@ Call log:
             - generic [ref=e41]:
               - generic [ref=e42]: 🔔
               - generic [ref=e43]:
-                - paragraph [ref=e44]: Welcome to ClickUp Replica!
+                - paragraph [ref=e44]: Welcome to TaskSync!
                 - paragraph [ref=e45]: Just now
             - paragraph [ref=e47]: You're all caught up.
 ```
@@ -87,12 +99,12 @@ Call log:
   14 |   
   15 |   // Create workspace
   16 |   await page.click('text=Create new Workspace');
-  17 |   await page.fill('input[name="name"]', 'My E2E Workspace');
+> 17 |   await page.fill('input[name="name"]', 'My E2E Workspace');
+     |              ^ Error: page.fill: Test timeout of 30000ms exceeded.
   18 |   await page.click('button[type="submit"]:has-text("Create")');
   19 |   
   20 |   // It redirects to empty state because no lists
-> 21 |   await expect(page.getByText('Create your first List')).toBeVisible();
-     |                                                          ^ Error: expect(locator).toBeVisible() failed
+  21 |   await expect(page.getByText('Create your first List')).toBeVisible();
   22 |   
   23 |   // Create list
   24 |   await page.click('text=+ Create Default List');

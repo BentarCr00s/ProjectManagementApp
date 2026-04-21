@@ -1,7 +1,7 @@
 {
-  "name": "clickup-replica",
+  "name": "tasksync",
   "version": "1.0.0",
-  "description": "ClickUp replica built with Express, Pug, and Turso DB",
+  "description": "TaskSync project management app built with Express, Pug, and Turso DB",
   "main": "src/app.js",
   "scripts": {
     "dev": "nodemon src/app.js",

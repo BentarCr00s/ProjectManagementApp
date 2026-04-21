@@ -87,7 +87,7 @@ describe('Workspace Routes', () => {
       const otherCookie = await createTestUser(app, {
         name: 'Outsider',
         email: `outsider-${Date.now()}@test.com`,
-        password: 'pass'
+        password: 'password123'
       });
 
       const res = await request(app)
@@ -120,7 +120,7 @@ describe('Workspace Routes', () => {
       const otherCookie = await createTestUser(app, {
         name: 'Non Member',
         email: `nonmember-${Date.now()}@test.com`,
-        password: 'pass'
+        password: 'password123'
       });
 
       const res = await request(app)

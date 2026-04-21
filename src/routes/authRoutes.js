@@ -14,7 +14,7 @@ const router = express.Router();
 
 // GET /login
 router.get('/login', (req, res) => {
-  res.render('pages/login', { layout: 'auth', title: 'Log in to ClickUp Replica' });
+  res.render('pages/login', { layout: 'auth', title: 'Log in to TaskSync' });
 });
 
 // POST /login
@@ -42,7 +42,7 @@ router.post('/login', validate(loginRules), async (req, res) => {
 
 // GET /register
 router.get('/register', (req, res) => {
-  res.render('pages/register', { layout: 'auth', title: 'Sign up for ClickUp Replica' });
+  res.render('pages/register', { layout: 'auth', title: 'Sign up for TaskSync' });
 });
 
 // POST /register

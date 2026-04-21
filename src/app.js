@@ -73,7 +73,7 @@ app.use((err, req, res, next) => {
 // Start Server (only if not imported by tests)
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`🚀 ClickUp Replica running on http://localhost:${PORT}`);
+    console.log(`🚀 TaskSync running on http://localhost:${PORT}`);
   });
 }
 

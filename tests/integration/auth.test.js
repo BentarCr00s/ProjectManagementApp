@@ -87,7 +87,7 @@ describe('Auth Routes', () => {
       // First register to get a session
       const regRes = await request(app)
         .post('/register')
-        .send({ name: 'Logout User', email: 'logout@test.com', password: 'pass' });
+        .send({ name: 'Logout User', email: 'logout@test.com', password: 'password123' });
 
       const cookie = regRes.headers['set-cookie'];
 
@@ -125,7 +125,7 @@ describe('Auth Routes', () => {
     it('allows authenticated requests through to protected routes', async () => {
       const regRes = await request(app)
         .post('/register')
-        .send({ name: 'Auth Test', email: 'authtest@test.com', password: 'pass' });
+        .send({ name: 'Auth Test', email: 'authtest@test.com', password: 'password123' });
 
       const cookie = regRes.headers['set-cookie'];
 

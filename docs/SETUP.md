@@ -1,6 +1,6 @@
 # Developer Setup Guide
 
-Step-by-step instructions for running the ClickUp Replica locally from scratch.
+Step-by-step instructions for running TaskSync locally from scratch.
 
 ---
 
