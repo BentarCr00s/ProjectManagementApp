@@ -1,0 +1,91 @@
+extends ../layouts/main.pug
+include ../mixins/taskRow.pug
+
+block content
+  .h-full.flex.flex-col.bg-white
+
+    //- Filter Toolbar
+    .flex.items-center.gap-3.px-4.py-2.border-b.border-gray-200.bg-gray-50.flex-shrink-0.flex-wrap
+      span.text-xs.font-semibold.text-gray-500.uppercase.tracking-wide Filters:
+      select#filter-status.text-xs.border.border-gray-200.rounded.px-2.py-1.bg-white.focus_outline-none.focus_border-brand-400.cursor-pointer(onchange="applyListFilters()")
+        option(value="ALL") All Status
+        option(value="TODO") Todo
+        option(value="IN_PROGRESS") In Progress
+        option(value="REVIEW") Review
+        option(value="DONE") Done
+      select#filter-priority.text-xs.border.border-gray-200.rounded.px-2.py-1.bg-white.focus_outline-none.focus_border-brand-400.cursor-pointer(onchange="applyListFilters()")
+        option(value="ALL") All Priority
+        option(value="urgent") Urgent
+        option(value="high") High
+        option(value="normal") Normal
+        option(value="low") Low
+      select#filter-assignee.text-xs.border.border-gray-200.rounded.px-2.py-1.bg-white.focus_outline-none.focus_border-brand-400.cursor-pointer(onchange="applyListFilters()")
+        option(value="ALL") All Assignees
+        if members && members.length > 0
+          each member in members
+            option(value=member.id)= member.name
+      button.text-xs.px-3.py-1.border.border-gray-200.rounded.bg-white.text-gray-500.hover_bg-gray-100.hover_text-gray-700.transition-colors(onclick="clearListFilters()") Clear Filters
+
+    //- List Header
+    .flex.items-center.px-4.py-3.border-b.border-gray-200.bg-gray-50.text-xs.font-semibold.text-gray-500.uppercase.tracking-wider.flex-shrink-0
+      .w-9
+      .flex-1 Task Name
+      .w-24 Assignee
+      .w-32 Due Date
+      .w-24 Priority
+
+    //- List Content
+    .flex-1.overflow-y-auto.pb-20
+      if Object.keys(tasks).some(k => tasks[k].length > 0)
+        each statusGroup, statusName in tasks
+          if statusGroup.length > 0
+            .status-group.mt-6.mb-2.px-4(data-group-status=statusName)
+              span(class=`status-${statusName.toLowerCase().replace('_','')} px-3 py-1 text-xs font-bold rounded-md shadow-sm border border-gray-100`)= statusName.replace('_', ' ')
+              span.text-xs.text-gray-400.ml-2.group-task-count #{statusGroup.length} tasks
+
+            .border-t.border-gray-200(data-group-status=statusName)
+              each task in statusGroup
+                +taskRow(task)
+      else
+        .empty-state
+          .text-4xl.mb-4 📋
+          h3.text-lg.font-medium.text-gray-900 No tasks in this list
+          p.text-sm.text-gray-500.mt-1.mb-4 Create your first task to get started.
+          button.btn-primary(x-data @click="$dispatch('open-create-task')")
+            span.mr-1 +
+            | Create your first task
+
+    //- No results after filtering
+    #filter-empty.hidden.py-16.text-center
+      .text-3xl.mb-3 🔍
+      p.text-sm.font-medium.text-gray-700 No tasks match your filters
+      button.mt-3.text-xs.text-brand-500.hover_text-brand-700.underline(onclick="clearListFilters()") Clear filters
+
+  script.
+    function applyListFilters() {
+      const status = document.getElementById('filter-status').value;
+      const priority = document.getElementById('filter-priority').value;
+      const assignee = document.getElementById('filter-assignee').value;
+      const rows = document.querySelectorAll('[data-status][data-priority][data-assignee-id]');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const matchStatus = status === 'ALL' || row.dataset.status === status;
+        const matchPriority = priority === 'ALL' || row.dataset.priority === priority;
+        const matchAssignee = assignee === 'ALL' || row.dataset.assigneeId === assignee;
+        const visible = matchStatus && matchPriority && matchAssignee;
+        row.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
+      });
+
+      // Show/hide empty state
+      const filterEmpty = document.getElementById('filter-empty');
+      if (filterEmpty) filterEmpty.classList.toggle('hidden', visibleCount > 0 || (status === 'ALL' && priority === 'ALL' && assignee === 'ALL'));
+    }
+
+    function clearListFilters() {
+      document.getElementById('filter-status').value = 'ALL';
+      document.getElementById('filter-priority').value = 'ALL';
+      document.getElementById('filter-assignee').value = 'ALL';
+      applyListFilters();
+    }

@@ -1,0 +1,60 @@
+extends ../layouts/main.pug
+
+block content
+  .p-8.max-w-5xl.mx-auto
+    .mb-8
+      h2.text-2xl.font-bold.text-gray-900 Good morning, #{user.name.split(' ')[0]}
+      p.text-gray-500 Here's what's happening in your workspaces.
+
+    .grid.grid-cols-1.md_grid-cols-3.gap-6
+      //- Workspaces List
+      .col-span-2
+        .flex.items-center.justify-between.mb-4
+          h3.text-lg.font-semibold.text-gray-800 Your Workspaces
+          
+        .grid.grid-cols-1.sm_grid-cols-2.gap-4
+          if workspaces && workspaces.length > 0
+            each ws in workspaces
+              a.card.p-5.hover_border-brand-300.transition-colors.group(href=`/workspaces/${ws.id}`)
+                .flex.items-center.gap-3.mb-3
+                  .w-10.h-10.rounded-lg.bg-brand-100.text-brand-600.flex.items-center.justify-center.text-xl 🏢
+                  h4.font-semibold.text-gray-900.group-hover_text-brand-600= ws.name
+                p.text-sm.text-gray-500 Go to workspace →
+          
+          //- Create Workspace Card
+          div(class="card p-5 border-dashed border-2 border-gray-200 bg-transparent hover_border-brand-400 hover_bg-brand-50 transition-colors cursor-pointer flex flex-col items-center justify-center text-center min-h-[120px]" x-data @click="$dispatch('open-create-ws')")
+            .w-8.h-8.rounded-full.bg-brand-100.text-brand-600.flex.items-center.justify-center.mb-2
+              span +
+            h4.font-medium.text-brand-600 Create new Workspace
+      
+      //- Recent Activity / Inbox (Mockup)
+      .col-span-1
+        h3.text-lg.font-semibold.text-gray-800.mb-4 Inbox
+        .card.p-0.overflow-hidden
+          .p-4.border-b.border-gray-100.flex.items-start.gap-3
+            .w-8.h-8.rounded-full.bg-blue-100.text-blue-600.flex.items-center.justify-center.flex-shrink-0 🔔
+            div
+              p.text-sm.text-gray-800 Welcome to ClickUp Replica!
+              p.text-xs.text-gray-500 Just now
+          .p-4.text-center
+            p.text-sm.text-gray-500 You're all caught up.
+
+  //- Create Workspace Modal
+  div(x-data="{ open: false }" 
+      @open-create-ws.window="open = true"
+      x-show="open" 
+      x-cloak
+      class="fixed inset-0 z-50 overflow-y-auto" 
+      style="display: none;")
+    .flex.items-center.justify-center.min-h-screen.px-4
+      .fixed.inset-0.bg-gray-500.bg-opacity-75.transition-opacity(x-show="open" @click="open = false")
+      
+      .bg-white.rounded-xl.shadow-modal.transform.transition-all.max-w-md.w-full.p-6(x-show="open")
+        h3.text-lg.font-medium.text-gray-900.mb-4 Create Workspace
+        form(action="/workspaces" method="POST")
+          div.mb-4
+            label.form-label Workspace Name
+            input.form-input(type="text" name="name" required placeholder="e.g. Acme Corp" autofocus)
+          .flex.justify-end.gap-3
+            button.btn-secondary(type="button" @click="open = false") Cancel
+            button.btn-primary(type="submit") Create

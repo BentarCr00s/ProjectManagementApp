@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{title}
+    link(rel="stylesheet", href="/css/styles.css")
+  body.bg-surface-secondary.text-gray-800.font-sans.antialiased.min-h-screen.flex.items-center.justify-center
+    
+    .w-full.max-w-md.p-6
+      .text-center.mb-8
+        .inline-flex.items-center.justify-center.w-16.h-16.rounded-2xl.bg-brand-600.text-white.mb-4
+          span.text-3xl ⬡
+        h1.text-2xl.font-bold.text-gray-900= title
+        p.text-sm.text-gray-500.mt-2 Welcome to the ultimate productivity platform.
+      
+      .card.p-8
+        if error
+          .mb-6.p-4.rounded-lg.bg-red-50.border.border-red-200.text-sm.text-red-600.flex.items-start.gap-2
+            svg.w-5.h-5.flex-shrink-0(fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+            span= error
+
+        block content
+
+      .mt-8.text-center.text-sm.text-gray-500
+        p Built with Express, Pug & Turso DB

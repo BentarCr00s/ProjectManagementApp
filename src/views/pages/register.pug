@@ -1,0 +1,21 @@
+extends ../layouts/auth.pug
+
+block content
+  form.space-y-5(action="/register" method="POST")
+    div
+      label.form-label(for="name") Full Name
+      input#name.form-input(type="text" name="name" required placeholder="John Doe" autofocus)
+
+    div
+      label.form-label(for="email") Email Address
+      input#email.form-input(type="email" name="email" required placeholder="name@company.com")
+    
+    div
+      label.form-label(for="password") Password
+      input#password.form-input(type="password" name="password" required placeholder="Create a strong password" minlength="6")
+    
+    button.btn-primary.w-full.justify-center.py-2_5.text-base(type="submit") Create Account
+    
+  .mt-6.text-center.text-sm.text-gray-600
+    | Already have an account? 
+    a.font-medium.text-brand-600.hover_text-brand-700(href="/login") Log in

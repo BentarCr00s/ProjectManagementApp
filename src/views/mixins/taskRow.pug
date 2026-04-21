@@ -1,0 +1,31 @@
+mixin taskRow(task)
+  .flex.items-center.px-4.py-3.border-b.border-gray-100.hover_bg-gray-50.transition-colors.group.cursor-pointer(
+    onclick=`openTaskDetail('${task.id}')`
+    data-status=task.status
+    data-priority=task.priority
+    data-assignee-id=task.assignee_id || ''
+  )
+    .w-6.h-6.mr-3.rounded.border.border-gray-300.flex.items-center.justify-center.flex-shrink-0.group-hover_border-brand-400
+      //- Custom checkbox
+
+    .flex-1.min-w-0.mr-4
+      .flex.items-center.gap-2
+        h4.text-sm.font-medium.text-gray-800.truncate= task.title
+        span(class=`status-${task.status.toLowerCase().replace('_','')} ml-2 text-[10px]`)= task.status.replace('_',' ')
+
+    .w-24.flex-shrink-0
+      if task.assignee_id
+        .avatar(style=`background-color: ${task.assignee_color}` title=task.assignee_name)
+          | #{task.assignee_name.charAt(0).toUpperCase()}
+      else
+        .w-7.h-7.rounded-full.border.border-dashed.border-gray-300
+
+    .w-32.flex-shrink-0
+      span.text-sm.text-gray-500
+        if task.due_date
+          | #{new Date(task.due_date).toLocaleDateString()}
+        else
+          | -
+
+    .w-24.flex-shrink-0
+      span(class=`priority-${task.priority} text-xs uppercase tracking-wider`)= task.priority

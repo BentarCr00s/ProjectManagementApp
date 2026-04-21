@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f8f9fc;
+  }
+}
+
+@layer components {
+  /* Sidebar */
+  .sidebar {
+    @apply bg-sidebar-bg text-sidebar-text flex flex-col h-screen fixed left-0 top-0 w-60 z-30 overflow-hidden;
+    box-shadow: theme('boxShadow.sidebar');
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white text-sm font-medium rounded-lg hover_bg-brand-700 transition-all duration-150 active_scale-95 focus_outline-none focus_ring-2 focus_ring-brand-400 focus_ring-offset-1;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-surface-tertiary text-gray-700 text-sm font-medium rounded-lg hover_bg-gray-200 transition-all duration-150 active_scale-95 focus_outline-none;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 text-gray-500 text-sm font-medium rounded-lg hover_bg-surface-tertiary hover_text-gray-700 transition-all duration-150;
+  }
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover_bg-red-600 transition-all duration-150 active_scale-95;
+  }
+
+  /* Form inputs */
+  .form-input {
+    @apply w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus_outline-none focus_ring-2 focus_ring-brand-400 focus_border-transparent transition-all;
+  }
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+  .form-select {
+    @apply w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus_outline-none focus_ring-2 focus_ring-brand-400 focus_border-transparent transition-all;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-xl shadow-card border border-gray-100;
+  }
+
+  /* Status badges */
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide;
+  }
+  .status-todo {
+    @apply status-badge bg-gray-100 text-gray-600;
+  }
+  .status-inprogress {
+    @apply status-badge bg-blue-100 text-blue-700;
+  }
+  .status-review {
+    @apply status-badge bg-purple-100 text-purple-700;
+  }
+  .status-done {
+    @apply status-badge bg-green-100 text-green-700;
+  }
+
+  /* Priority badges */
+  .priority-urgent { @apply inline-flex items-center gap-1 text-xs font-medium text-red-600; }
+  .priority-high   { @apply inline-flex items-center gap-1 text-xs font-medium text-orange-500; }
+  .priority-normal { @apply inline-flex items-center gap-1 text-xs font-medium text-blue-500; }
+  .priority-low    { @apply inline-flex items-center gap-1 text-xs font-medium text-gray-400; }
+
+  /* Avatar */
+  .avatar {
+    @apply w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0;
+  }
+
+  /* Task card (Kanban) */
+  .task-card {
+    @apply bg-white rounded-xl p-3.5 shadow-card border border-gray-100 cursor-pointer hover_shadow-card-hover hover_-translate-y-0.5 transition-all duration-150 select-none;
+  }
+  .task-card.drag-over {
+    @apply border-brand-400 bg-brand-50;
+  }
+  .task-card.dragging {
+    @apply opacity-40 rotate-2;
+  }
+
+  /* Kanban column */
+  .kanban-column {
+    @apply flex-shrink-0 w-72 flex flex-col gap-2;
+  }
+  .kanban-column-header {
+    @apply flex items-center justify-between px-1 py-2;
+  }
+  .kanban-drop-zone {
+    @apply min-h-16 flex flex-col gap-2 rounded-xl p-2 transition-colors;
+  }
+  .kanban-drop-zone.drag-over {
+    @apply bg-brand-50 border-2 border-dashed border-brand-300;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in;
+  }
+  .modal-panel {
+    @apply bg-white rounded-2xl shadow-modal w-full max-w-3xl max-h-[90vh] flex flex-col animate-scale-in;
+  }
+
+  /* Toast */
+  .toast {
+    @apply fixed bottom-6 right-6 z-[100] px-4 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-3 animate-slide-in;
+  }
+  .toast-success { @apply toast bg-green-600 text-white; }
+  .toast-error   { @apply toast bg-red-600 text-white; }
+  .toast-info    { @apply toast bg-brand-600 text-white; }
+
+  /* Tabs */
+  .tab-item {
+    @apply px-4 py-2 text-sm font-medium text-gray-500 border-b-2 border-transparent hover_text-gray-800 hover_border-gray-300 transition-all cursor-pointer;
+  }
+  .tab-item.active {
+    @apply text-brand-600 border-brand-600;
+  }
+
+  /* Empty state */
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-16 text-center;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+}

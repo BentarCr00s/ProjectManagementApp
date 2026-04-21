@@ -1,0 +1,43 @@
+mixin taskCard(task)
+  .task-card(
+    data-id=task.id
+    data-status=task.status
+    data-priority=task.priority
+    data-assignee-id=task.assignee_id || ''
+    draggable="true"
+    onclick=`openTaskDetail('${task.id}')`
+  )
+    .flex.justify-between.items-start.mb-2
+      div
+        span(class=`priority-${task.priority} mr-2`)
+          if task.priority === 'urgent'
+            | 🔴
+          else if task.priority === 'high'
+            | 🟠
+          else if task.priority === 'normal'
+            | 🔵
+          else
+            | ⚪
+        span.text-xs.text-gray-400= task.id.substring(0,6).toUpperCase()
+
+    h4.font-medium.text-gray-800.text-sm.mb-3.leading-snug= task.title
+
+    if task.description
+      p.text-xs.text-gray-500.line-clamp-2.mb-3= task.description
+
+    .flex.items-center.justify-between.mt-auto
+      .flex.items-center.gap-2.text-xs.text-gray-500
+        if task.time_tracked > 0
+          span.flex.items-center.gap-1
+            | ⏱️ #{Math.floor(task.time_tracked / 60)}m
+
+        if task.due_date
+          span.flex.items-center.gap-1(class=new Date(task.due_date) < new Date() ? 'text-red-500' : '')
+            | 📅 #{new Date(task.due_date).toLocaleDateString('en-US', {month:'short', day:'numeric'})}
+
+      if task.assignee_id
+        .avatar(style=`background-color: ${task.assignee_color}` title=task.assignee_name)
+          | #{task.assignee_name.charAt(0).toUpperCase()}
+      else
+        .w-7.h-7.rounded-full.border.border-dashed.border-gray-300.flex.items-center.justify-center.text-gray-400.text-xs(title="Unassigned")
+          | ?

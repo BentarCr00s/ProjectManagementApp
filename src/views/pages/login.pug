@@ -1,0 +1,19 @@
+extends ../layouts/auth.pug
+
+block content
+  form.space-y-5(action="/login" method="POST")
+    div
+      label.form-label(for="email") Email Address
+      input#email.form-input(type="email" name="email" required placeholder="name@company.com" autofocus)
+    
+    div
+      .flex.justify-between.items-center.mb-1
+        label.form-label.mb-0(for="password") Password
+        a.text-xs.font-medium.text-brand-600.hover_text-brand-700(href="#") Forgot password?
+      input#password.form-input(type="password" name="password" required placeholder="••••••••")
+    
+    button.btn-primary.w-full.justify-center.py-2_5.text-base(type="submit") Log In
+    
+  .mt-6.text-center.text-sm.text-gray-600
+    | Don't have an account? 
+    a.font-medium.text-brand-600.hover_text-brand-700(href="/register") Sign up

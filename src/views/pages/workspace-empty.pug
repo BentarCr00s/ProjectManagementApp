@@ -1,0 +1,14 @@
+extends ../layouts/main.pug
+
+block content
+  .h-full.flex.flex-col.items-center.justify-center.bg-white
+    .text-center.max-w-md
+      .text-6xl.mb-6 🚀
+      h2.text-2xl.font-bold.text-gray-900.mb-2 Welcome to #{title}
+      p.text-gray-500.mb-8 This workspace is empty. Create your first task list to start collaborating with your team.
+      
+      .bg-gray-50.p-6.rounded-xl.border.border-gray-200
+        h3.font-medium.text-gray-900.mb-4 Create your first List
+        form(action=`/workspaces/${currentWorkspace.id}/lists` method="POST")
+          input.form-input.mb-4(type="text" name="name" placeholder="e.g. Marketing, Engineering, Design" required autofocus)
+          button.btn-primary.w-full.justify-center(type="submit") + Create Default List
